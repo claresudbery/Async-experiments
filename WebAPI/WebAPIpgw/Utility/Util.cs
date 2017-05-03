@@ -5,10 +5,10 @@ namespace WebAPIpgw.Utility
 {
     public class Util
     {
-        public static int GetDelay()
+        public static int GetDelay(string whichDelay)
         {
-            return random.Next(Configuration.GetDelayMin(),
-                                 Configuration.GetDelayMax());
+            return random.Next(Configuration.GetDelayMin(whichDelay),
+                                 Configuration.GetDelayMax(whichDelay));
         }
       
         static System.Random random = new System.Random();
@@ -29,17 +29,15 @@ namespace WebAPIpgw.Utility
                 return 0;
         }
 
-        public static int GetDelayMin()
+        public static int GetDelayMin(string whichDelay)
         {
-            if (_delayMin == int.MaxValue)
-                _delayMin = getKeyValInt("DelayMin");
+            _delayMin = getKeyValInt(whichDelay + "DelayMin");
             return _delayMin;
         }
 
-        public static int GetDelayMax()
+        public static int GetDelayMax(string whichDelay)
         {
-            if ( _delayMax == int.MaxValue )
-                _delayMax = getKeyValInt("DelayMax");
+            _delayMax = getKeyValInt(whichDelay + "DelayMax");
             return _delayMax;
         }
 
