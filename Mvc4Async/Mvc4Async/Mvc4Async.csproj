@@ -24,6 +24,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -127,6 +128,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Service\AsyncExperiments.cs" />
     <Compile Include="Models\Gizmo.cs" />
     <Compile Include="Models\ProdGizWidgetVM.cs" />
     <Compile Include="Models\Product.cs" />
@@ -215,6 +217,7 @@
     <Content Include="Views\Home\PWG.cshtml" />
     <Content Include="Views\Home\Widgets.cshtml" />
     <Content Include="Views\Shared\_links.cshtml" />
+    <Content Include="Views\Home\AsyncExperiments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

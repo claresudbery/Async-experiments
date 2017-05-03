@@ -19,7 +19,16 @@ namespace WebAPIpgw.Controllers
             // Task.Delay is essentially the asynchronous version of Thread.Sleep:
 
             await Task.Delay(Util.GetDelay(), cancelToken);
+            DoSomeAsyncStuff();
             return Product.GetProducts();
+        }
+
+        private async Task DoSomeAsyncStuff()
+        {
+            await Task.Delay(1000);
+            var thing = 10;
+            System.Diagnostics.Debug.WriteLine("I am here!");
+            var thing2 = thing + 10;
         }
     }
 }

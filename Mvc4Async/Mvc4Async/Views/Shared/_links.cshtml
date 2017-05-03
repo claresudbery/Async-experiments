@@ -21,6 +21,14 @@
         @Html.ActionLink("Sync Products", "Products") 
     </div>
 <div>
+    <h3> Async Playground</h3>
+    @Html.ActionLink("NestedAsyncCallsNoWait", "NestedAsyncCallsNoWait") &nbsp;||&nbsp;
+    @Html.ActionLink("NestedAsyncCallsWithWait", "NestedAsyncCallsWithWait") &nbsp;||&nbsp;
+    @Html.ActionLink("PlaceATaskInADifferentContext", "PlaceATaskInADifferentContext") &nbsp;||&nbsp;
+    @Html.ActionLink("PlaceATaskInADifferentContextAndWaitForIt", "PlaceATaskInADifferentContextAndWaitForIt") &nbsp;||&nbsp;
+    @Html.ActionLink("FlowOfExecutionExample", "FlowOfExecutionExample") &nbsp;||&nbsp;
+</div>
+<div>
          @Html.ActionLink("Gizmos Cancellation Token", "GizmosCancelAsync")  &nbsp;||&nbsp;
      @Html.ActionLink("PWGtimeOut Cancellation", "PWGtimeOut") 
 </div>

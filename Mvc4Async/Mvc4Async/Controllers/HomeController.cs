@@ -131,9 +131,57 @@ namespace Mvc4Async.Controllers
             return View("Products", prodService.GetProducts());
         }
 
+        public async Task<ActionResult> NestedAsyncCallsNoWait()
+        {
+            ViewBag.ExperimentType = "Asynchronous experiments - nested 11-second call which we don't wait for.";
+            var asyncExperiments = new AsyncExperiments();
+            var task = asyncExperiments.NestedAsyncExperimentsNumberSeven();
+            await Task.Delay(1000);
+            return View("AsyncExperiments", await task);
+            //await Task.Delay(10);
+            //return View("AsyncExperiments", 1);
+        }
 
+        public async Task<ActionResult> NestedAsyncCallsWithWait()
+        {
+            ViewBag.ExperimentType = "Asynchronous experiments - nested 11-second call which we wait for.";
+            var asyncExperiments = new AsyncExperiments();
+            return View("AsyncExperiments", await asyncExperiments.NestedAsyncExperimentsNumberSix());
+        }
+
+        public async Task<ActionResult> PlaceATaskInADifferentContext()
+        {
+            ViewBag.ExperimentType = "Asynchronous experiments - placing a task in a different context.";
+            var asyncExperiments = new AsyncExperiments();
+
+            asyncExperiments.PlaceATaskInADifferentContext(101);
+
+            System.Diagnostics.Debug.WriteLine("R1. The task in the different context has been kicked off.");
+            System.Diagnostics.Debug.WriteLine("R2. We are NOT awaiting its results.");
+
+            return View("AsyncExperiments", 101);
+        }
+
+        public async Task<ActionResult> PlaceATaskInADifferentContextAndWaitForIt()
+        {
+            ViewBag.ExperimentType = "Asynchronous experiments - awaiting a task in a different context.";
+            var asyncExperiments = new AsyncExperiments();
+
+            var task = asyncExperiments.PlaceATaskInADifferentContext(102);
+
+            System.Diagnostics.Debug.WriteLine("R1. The task in the different context has been kicked off.");
+            System.Diagnostics.Debug.WriteLine("R2. We ARE awaiting its results.");
+
+            return View("AsyncExperiments", await task);
+        }
+
+        public async Task<ActionResult> FlowOfExecutionExample()
+        {
+            ViewBag.ExperimentType = "Asynchronous experiments - flow of execution example.";
+            var asyncExperiments = new AsyncExperiments();
+
+            return View("AsyncExperiments", await asyncExperiments.FlowOfExecutionExample());
+        }
     } // End of HomeController
-       
-
 }
 
