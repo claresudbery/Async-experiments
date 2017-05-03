@@ -184,6 +184,8 @@ namespace Mvc4Async.Service
         // AND we marked the method async,
         // means that we automatically return a Task object.
         // Otherwise we have to explicitly return a task (see NotMarkedAsyncButEmptyTaskReturned below)
+        // BUT the task that is returned is NOT the Task.Delay task! A brand new one will be created instead!
+        // If we want to return the task associated with Task.Delay, we have to use the await keyword.
         public async Task MarkedAsyncWithEmptyTaskAndNotCallingAwait()
         {
             Task.Delay(1);
