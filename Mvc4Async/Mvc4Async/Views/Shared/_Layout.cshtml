@@ -1,4 +1,4 @@
-@{
+﻿@{
     Assets.AddStyle("~/Content/css");
     Assets.AddStyle("~/Content/themes/base/css");
     Assets.AddScript("~/bundles/js");
@@ -28,5 +28,8 @@
 
     @Assets.GetScripts()
     <p>Elapsed time: @Html.Encode(ViewBag.elapsedTime) </p>
+    <p>Num gizmos: @Html.Encode(ViewBag.numGizmos) </p>
+    <p>Num widgets: @Html.Encode(ViewBag.numWidgets) </p>
+    <p>Num products: @Html.Encode(ViewBag.numProducts) </p>
 </body>
 </html>
