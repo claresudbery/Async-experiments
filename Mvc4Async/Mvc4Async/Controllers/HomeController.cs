@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 using Mvc4Async.Models;
@@ -220,6 +221,49 @@ namespace Mvc4Async.Controllers
             var asyncExperiments = new AsyncExperiments();
 
             return View("AsyncExperiments", await asyncExperiments.FlowOfExecutionExample());
+        }
+
+        public async Task<ActionResult> CreateADeadlock()
+        {
+            ViewBag.ExperimentType = "Asynchronous experiments - deadlock example. Warning! This will hang!!";
+            var asyncExperiments = new AsyncExperiments();
+
+            var task = asyncExperiments.FlowOfExecutionExample();
+            var result = task.Result;
+
+            System.Diagnostics.Debug.WriteLine("Because of the deadlock, this line of code should never be reached!");
+
+            return View("AsyncExperiments", result);
+        }
+
+        public async Task<ActionResult> EachAsyncMethodHasItsOwnContext()
+        {
+            ViewBag.ExperimentType = "Asynchronous experiments - Each Async Method Has Its Own Context.";
+            var asyncExperiments = new AsyncExperiments();
+
+            return View("AsyncExperiments", await asyncExperiments.EachAsyncMethodHasItsOwnContext());
+        }
+
+        public async Task<ActionResult> CallingCodeWhichContainsMultipleAwaits()
+        {
+            ViewBag.ExperimentType = "Asynchronous experiments - Calling Code Which Contains Multiple Awaits.";
+            var asyncExperiments = new AsyncExperiments();
+
+            await asyncExperiments.CallingCodeWhichContainsMultipleAwaits();
+
+            return View("AsyncExperiments", 10);
+        }
+
+        public ActionResult CallAsyncCodeInANonAsyncContext()
+        {
+            ViewBag.ExperimentType = "Asynchronous experiments - Calling Code Which Contains Multiple Awaits.";
+            var asyncExperiments = new AsyncExperiments();
+
+            Debug.WriteLine("Because we are not in an async method, even though we do not await the return, we will still block the thread until it is completed.");
+            asyncExperiments.ReturnATaskEvenThoughWeHaveUsedTheAwaitKeywordMoreThanOnce();
+            Debug.WriteLine("We won't get here until the async function is completed.");
+
+            return View("AsyncExperiments", 10);
         }
     } // End of HomeController
 }

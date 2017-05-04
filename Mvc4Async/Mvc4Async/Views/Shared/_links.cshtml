@@ -10,9 +10,9 @@
         </div>
     <div>
         <h3> Asynchronous Versions</h3>
-              @Html.ActionLink("Widgets Async", "WidgetsAsync") &nbsp;||&nbsp;
-       @Html.ActionLink("Gizmos Async", "GizmosAsync") &nbsp;||&nbsp;
-        @Html.ActionLink("Products Async", "ProductsAsync") 
+              @Html.ActionLink("Widgets Async (3 seconds)", "WidgetsAsync") &nbsp;||&nbsp;
+       @Html.ActionLink("Gizmos Async (10 seconds)", "GizmosAsync") &nbsp;||&nbsp;
+        @Html.ActionLink("Products Async (10 milliseconds)", "ProductsAsync") 
     </div>
         <div>
         <h3> Synchronous Versions</h3>
@@ -22,11 +22,21 @@
     </div>
 <div>
     <h3> Async Playground</h3>
-    @Html.ActionLink("NestedAsyncCallsNoWait", "NestedAsyncCallsNoWait") &nbsp;||&nbsp;
-    @Html.ActionLink("NestedAsyncCallsWithWait", "NestedAsyncCallsWithWait") &nbsp;||&nbsp;
-    @Html.ActionLink("PlaceATaskInADifferentContext", "PlaceATaskInADifferentContext") &nbsp;||&nbsp;
-    @Html.ActionLink("PlaceATaskInADifferentContextAndWaitForIt", "PlaceATaskInADifferentContextAndWaitForIt") &nbsp;||&nbsp;
-    @Html.ActionLink("FlowOfExecutionExample", "FlowOfExecutionExample") &nbsp;||&nbsp;
+    <div>
+        @Html.ActionLink("NestedAsyncCallsNoWait", "NestedAsyncCallsNoWait") &nbsp;||&nbsp;
+        @Html.ActionLink("NestedAsyncCallsWithWait", "NestedAsyncCallsWithWait") &nbsp;||&nbsp;
+        @Html.ActionLink("PlaceATaskInADifferentContext", "PlaceATaskInADifferentContext") &nbsp;||&nbsp;
+        @Html.ActionLink("PlaceATaskInADifferentContextAndWaitForIt", "PlaceATaskInADifferentContextAndWaitForIt") &nbsp;||&nbsp;
+    </div>
+    <div>
+        @Html.ActionLink("FlowOfExecutionExample", "FlowOfExecutionExample") &nbsp;||&nbsp;
+        @Html.ActionLink("CreateADeadlock", "CreateADeadlock") &nbsp;||&nbsp;
+        @Html.ActionLink("EachAsyncMethodHasItsOwnContext", "EachAsyncMethodHasItsOwnContext") &nbsp;||&nbsp;
+        @Html.ActionLink("CallingCodeWhichContainsMultipleAwaits", "CallingCodeWhichContainsMultipleAwaits") &nbsp;||&nbsp;
+    </div>
+    <div>
+        @Html.ActionLink("CallAsyncCodeInANonAsyncContext", "CallAsyncCodeInANonAsyncContext") &nbsp;||&nbsp;
+    </div>
 </div>
 <div>
     <h3>Cancellation Tokens and Timeouts</h3>

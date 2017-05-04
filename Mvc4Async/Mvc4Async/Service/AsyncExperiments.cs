@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -248,17 +249,29 @@ namespace Mvc4Async.Service
 
         // We can mark the return type as Task and have multiple await statements.
         // The method will still return a task.
-        // Which of the await statements will the returned task encapsulate??
+        // The returned task is not related to the three await statements, 
+        // apart from the fact that it will not be returned until all three awaited things have been completed.
+        // What's interesting is that each await statement will return control to the caller,
+        // so potentially any code in the caller will get interrupted by each await statement returning?
+        // See CallingCodeWhichContainsMultipleAwaits for an attempt to test this.
         // I guess it doesn't matter - each await statement returns control once it has completed,
         // so in fact the multiple await statements will effectively be invoked synchronously
         // - one after the other.
-        public async Task ReturnATaskEvenThoughWeHaveUsedTheAwaitKeywordTwice()
+        public async Task ReturnATaskEvenThoughWeHaveUsedTheAwaitKeywordMoreThanOnce()
         {
-            await NotMarkedAsyncButEmptyTaskReturned();
+            Debug.WriteLine("About to do the first await.");
+            await Task.Delay(1000);
 
-            await ReturnATaskEvenThoughThereIsOtherCodeAfterTheTask();
+            Debug.WriteLine("About to do the second await.");
+            await Task.Delay(1000);
 
-            await MarkedAsyncWithEmptyTaskAndCallingAwait();
+            Debug.WriteLine("About to do the third await.");
+            await Task.Delay(1000);
+
+            Debug.WriteLine("About to do the fourth await.");
+            await Task.Delay(1000);
+
+            Debug.WriteLine("Exiting ReturnATaskEvenThoughWeHaveUsedTheAwaitKeywordMoreThanOnce.");
         }
 
         public Task NotMarkedAsyncButEmptyTaskReturned()
@@ -303,6 +316,73 @@ namespace Mvc4Async.Service
         {
             await Task.Delay(1000);
             return 12;
+        }
+
+        public async Task<int> EachAsyncMethodHasItsOwnContext()
+        {
+            await AsyncCodeResumingInADifferentContext();
+
+            // Do some more processing
+            Debug.WriteLine("This code is back in the main default context again, even though the nexted code changed context.");
+
+            return 12;
+        }
+
+        public async Task<int> AsyncCodeResumingInADifferentContext()
+        {
+            await Task.Delay(1000).ConfigureAwait(false);
+
+            // Do some more processing
+            Debug.WriteLine("This code will execute in a context that is not the main request context.");
+
+            return 12;
+        }
+
+        public async Task CallingCodeWhichContainsMultipleAwaits()
+        {
+            var task = ReturnATaskEvenThoughWeHaveUsedTheAwaitKeywordMoreThanOnce();
+
+            // Do this for five seconds
+            int numSeconds = 5;
+            for (int secondCount = 1; secondCount <= numSeconds; secondCount++)
+            {
+                // Do ten waits per second
+                for (int waitCount = 1; waitCount <= 10; waitCount++)
+                {
+                    int progress = ((secondCount - 1) * 10) + waitCount;
+                    Debug.WriteLine(progress + ": Because we have not yet awaited the task above, we will execute this code while it is also executing.");
+                    await Task.Delay(100);
+                }
+            }
+
+            // With the above code, potentially ReturnATaskEvenThoughWeHaveUsedTheAwaitKeywordMoreThanOnce
+            // can complete before our for loop exits, but we will still see the for loop completing because
+            // we don't hit "await task;" until after it has finished.
+            // If we use DoTenWaitsPerSecond instead, we get subtly different effects:
+            // 1) If we await DoTenWaitsPerSecond, this is equivalent to the inline for loop above.
+            // 2) If we call DoTenWaitsPerSecond but don't await it, execution continues to "await task;"
+            //    which means that when ReturnATaskEvenThoughWeHaveUsedTheAwaitKeywordMoreThanOnce completes,
+            //    we exit this method, even if DoTenWaitsPerSecond hasn't completed yet.
+            // await DoTenWaitsPerSecond(5);
+            // DoTenWaitsPerSecond(5);
+
+            await task;
+
+            Debug.WriteLine("The task has finally been awaited, and we can exit this request.");
+        }
+
+        private async Task DoTenWaitsPerSecond(int numSeconds)
+        {
+            for (int secondCount = 1; secondCount <= numSeconds; secondCount++)
+            {
+                // Do ten waits per second
+                for (int waitCount = 1; waitCount <= 10; waitCount++)
+                {
+                    int progress = ((secondCount - 1) * 10) + waitCount;
+                    Debug.WriteLine(progress + ": Because we have not yet awaited the task above, we will execute this code while it is also executing.");
+                    await Task.Delay(100);
+                }
+            }
         }
     }
 }
