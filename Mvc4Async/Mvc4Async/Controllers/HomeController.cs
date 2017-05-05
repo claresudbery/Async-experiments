@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Mvc4Async.Filters;
 using System.Web.UI;
 using System.Threading;
+using Mvc4Async.Hubs;
 using Mvc4Async.Service;
 
 namespace Mvc4Async.Controllers
@@ -271,9 +272,15 @@ namespace Mvc4Async.Controllers
             ViewBag.ExperimentType = "Asynchronous experiments - Reporting Progress.";
             var asyncExperiments = new AsyncExperiments();
 
-            await asyncExperiments.MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext();
+            var progressIndicator = new Progress<ProgressIndicator>(ReportProgress);
+            await asyncExperiments.MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext(progressIndicator);
 
             return View("AsyncExperiments", 10);
+        }
+
+        void ReportProgress(ProgressIndicator progressIndicator)
+        {
+            ProgressHub.NotifyHowManyProcessed(progressIndicator.Count, progressIndicator.Total);
         }
     } // End of HomeController
 }

@@ -139,7 +139,7 @@ namespace Mvc4Async.Service
             return 1;
         }
 
-        public async Task<int> MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext()
+        public async Task<int> MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext(IProgress<ProgressIndicator> progress = null)
         {
             int totalSeconds = 11;
             System.Diagnostics.Debug.WriteLine($"P. I am at the beginning of a task that will take {totalSeconds} seconds.");
@@ -148,8 +148,10 @@ namespace Mvc4Async.Service
                 // The use of ConfigureAwait means that after the delay, we will return to a different context
                 // (not the request context).
                 await Task.Delay(1000).ConfigureAwait(false);
-
-                ProgressHub.NotifyHowManyProcessed(numSeconds, totalSeconds);
+                if (progress != null)
+                {
+                    progress.Report(new ProgressIndicator {Count = numSeconds, Total = totalSeconds});
+                }
                 System.Diagnostics.Debug.WriteLine($"Q. This task should take {totalSeconds} seconds. Number of seconds so far: {numSeconds}");
             }
 

@@ -161,6 +161,7 @@
     <Compile Include="Service\GizmoService.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="Hubs\ProgressHub.cs" />
+    <Compile Include="Service\ProgressIndicator.cs" />
     <Compile Include="Service\Util.cs" />
     <Compile Include="Service\WidgetService.cs" />
     <Compile Include="Startup.cs" />
