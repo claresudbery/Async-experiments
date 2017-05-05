@@ -16,6 +16,8 @@ namespace Mvc4Async.Controllers
     [OutputCache(Location = OutputCacheLocation.None, NoStore = true)]
     public class HomeController : Controller
     {
+        static CancellationTokenSource _CancellationToken = new CancellationTokenSource();
+
         public async Task<ActionResult> PWGasync()
         {
             ViewBag.SyncType = "Asynchronous";
@@ -273,12 +275,30 @@ namespace Mvc4Async.Controllers
             var asyncExperiments = new AsyncExperiments();
 
             var progressIndicator = new Progress<ProgressIndicator>(ReportProgress);
-            await asyncExperiments.MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext(progressIndicator);
+            try
+            {
+                _CancellationToken.Dispose();
+                _CancellationToken = new CancellationTokenSource();
+                await asyncExperiments.MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext(
+                    _CancellationToken.Token,
+                    progressIndicator);
+            }
+            catch (Exception e)
+            {
+                ProgressHub.CancelProcessing(e.Message);
+            }
 
             return View("AsyncExperiments", 10);
         }
 
-        void ReportProgress(ProgressIndicator progressIndicator)
+        public async Task<ActionResult> Cancel()
+        {
+            _CancellationToken.Cancel();
+
+            return View("AsyncExperiments", 10);
+        }
+
+        private void ReportProgress(ProgressIndicator progressIndicator)
         {
             ProgressHub.NotifyHowManyProcessed(progressIndicator.Count, progressIndicator.Total);
         }

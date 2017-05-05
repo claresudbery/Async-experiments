@@ -13,5 +13,11 @@ namespace Mvc4Async.Hubs
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<ProgressHub>();
             hubContext.Clients.All.sendMessage(string.Format(message), percentage);
         }
+
+        public static void CancelProcessing(string message)
+        {
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<ProgressHub>();
+            hubContext.Clients.All.sendMessage(string.Format("Processing has been cancelled: " + message), 0);
+        }
     }
 }

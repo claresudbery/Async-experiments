@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Mvc4Async.Hubs;
 
@@ -15,7 +16,8 @@ namespace Mvc4Async.Service
 
             // The call to ConfigureAwait means that when the task completes, it will come back to a different context.
             // Therefore NOT the request context, which means that the ASP.Net request will probably have terminated.
-            await MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext().ConfigureAwait(false);
+            await MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext(
+                new CancellationToken()).ConfigureAwait(false);
 
             System.Diagnostics.Debug.WriteLine("B. The task in the different context has now completed.");
 
@@ -139,7 +141,9 @@ namespace Mvc4Async.Service
             return 1;
         }
 
-        public async Task<int> MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext(IProgress<ProgressIndicator> progress = null)
+        public async Task<int> MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext(
+            CancellationToken cancellationToken,
+            IProgress<ProgressIndicator> progress = null)
         {
             int totalSeconds = 11;
             System.Diagnostics.Debug.WriteLine($"P. I am at the beginning of a task that will take {totalSeconds} seconds.");
@@ -152,6 +156,7 @@ namespace Mvc4Async.Service
                 {
                     progress.Report(new ProgressIndicator {Count = numSeconds, Total = totalSeconds});
                 }
+                cancellationToken.ThrowIfCancellationRequested();
                 System.Diagnostics.Debug.WriteLine($"Q. This task should take {totalSeconds} seconds. Number of seconds so far: {numSeconds}");
             }
 
