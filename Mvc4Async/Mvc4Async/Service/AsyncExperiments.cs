@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Mvc4Async.Hubs;
 
 namespace Mvc4Async.Service
 {
@@ -140,13 +141,16 @@ namespace Mvc4Async.Service
 
         public async Task<int> MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext()
         {
-            System.Diagnostics.Debug.WriteLine("P. I am at the beginnong of a task that will take 11 seconds.");
-            for (int numSeconds = 1; numSeconds <= 11; numSeconds++)
+            int totalSeconds = 11;
+            System.Diagnostics.Debug.WriteLine($"P. I am at the beginning of a task that will take {totalSeconds} seconds.");
+            for (int numSeconds = 1; numSeconds <= totalSeconds; numSeconds++)
             {
                 // The use of ConfigureAwait means that after the delay, we will return to a different context
                 // (not the request context).
                 await Task.Delay(1000).ConfigureAwait(false);
-                System.Diagnostics.Debug.WriteLine("Q. This task should take 11 seconds. Number of seconds so far: " + numSeconds);
+
+                ProgressHub.NotifyHowManyProcessed(numSeconds, totalSeconds);
+                System.Diagnostics.Debug.WriteLine($"Q. This task should take {totalSeconds} seconds. Number of seconds so far: {numSeconds}");
             }
 
             // Note that the return value of 1 will automatically get wrapped in a task,

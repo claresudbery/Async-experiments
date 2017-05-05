@@ -256,12 +256,22 @@ namespace Mvc4Async.Controllers
 
         public ActionResult CallAsyncCodeInANonAsyncContext()
         {
-            ViewBag.ExperimentType = "Asynchronous experiments - Calling Code Which Contains Multiple Awaits.";
+            ViewBag.ExperimentType = "Asynchronous experiments - Call Async Code In A Non-Async Context.";
             var asyncExperiments = new AsyncExperiments();
 
             Debug.WriteLine("Because we are not in an async method, even though we do not await the return, we will still block the thread until it is completed.");
             asyncExperiments.ReturnATaskEvenThoughWeHaveUsedTheAwaitKeywordMoreThanOnce();
             Debug.WriteLine("We won't get here until the async function is completed.");
+
+            return View("AsyncExperiments", 10);
+        }
+
+        public async Task<ActionResult> ReportProgress()
+        {
+            ViewBag.ExperimentType = "Asynchronous experiments - Reporting Progress.";
+            var asyncExperiments = new AsyncExperiments();
+
+            await asyncExperiments.MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext();
 
             return View("AsyncExperiments", 10);
         }

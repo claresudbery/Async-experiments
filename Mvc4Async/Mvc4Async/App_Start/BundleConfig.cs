@@ -10,10 +10,10 @@ namespace Mvc4Async
             Assets.EnableOptimizations = !HttpContext.Current.IsDebuggingEnabled;
 
             var jsBundle = new JsBundle("~/bundles/js");
-            jsBundle.Include("~/Scripts", "jquery-*");
-            jsBundle.Include("~/Scripts", "jquery-ui*");
-            jsBundle.Include("~/Scripts", "jquery.unobtrusive*");
-            jsBundle.Include("~/Scripts", "jquery.validate*");
+            //jsBundle.Include("~/Scripts", "jquery-*");
+            //jsBundle.Include("~/Scripts", "jquery-ui*");
+            //jsBundle.Include("~/Scripts", "jquery.unobtrusive*");
+            //jsBundle.Include("~/Scripts", "jquery.validate*");
             jsBundle.Include("~/Scripts/AjaxLogin.js");
             bundles.Add(jsBundle);
 
