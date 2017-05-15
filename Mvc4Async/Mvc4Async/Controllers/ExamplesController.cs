@@ -46,7 +46,7 @@ namespace Mvc4Async.Controllers
             return View("AsyncExamples", 10);
         }
 
-        public async Task<ActionResult> FlowOfExecutionExample()
+        public async Task<ActionResult> Flow_Of_Execution_Example()
         {
             ViewBag.ExampleType = "Asynchronous examples - flow of execution example.";
             var asyncExamples = new AsyncExamples();

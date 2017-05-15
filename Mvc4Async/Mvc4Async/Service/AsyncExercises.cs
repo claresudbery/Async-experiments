@@ -15,6 +15,7 @@ namespace Mvc4Async.Service
             return 1;
         }
 
+        // EXERCISE 1
         public async Task<int> FlowOfControlEx1Part1()
         {
             Debug.WriteLine("Ex1 A");
@@ -25,26 +26,16 @@ namespace Mvc4Async.Service
             return 6;
         }
 
+        // EXERCISE 1
         public async Task<int> FlowOfControlEx1Part2()
         {
-            var returnedTask = FlowOfControlEx1Part3();
             Debug.WriteLine("Ex1 D");
-            await returnedTask;
+            await Task.Delay(1000);
             Debug.WriteLine("Ex1 E");
             return 10;
         }
 
-        public async Task<int> FlowOfControlEx1Part3()
-        {
-            Debug.WriteLine("Ex1 F");
-            for (int numSeconds = 1; numSeconds <= 4; numSeconds++)
-            {
-                Debug.WriteLine("Ex1 G" + numSeconds);
-                await Task.Delay(1000);
-            }
-            return 1;
-        }
-
+        // EXERCISE 2
         public async Task<int> FlowOfControlEx2Part1()
         {
             Debug.WriteLine("Ex2 A");
@@ -55,28 +46,54 @@ namespace Mvc4Async.Service
             return 6;
         }
 
+        // EXERCISE 2
         public async Task<int> FlowOfControlEx2Part2()
         {
-            FlowOfControlEx2Part3();
+            var returnedTask = FlowOfControlEx2Part3();
             Debug.WriteLine("Ex2 D");
-            return 12;
-        }
-
-        public async Task<int> FlowOfControlEx2Part3()
-        {
-            var returnedTask = FlowOfControlEx2Part4();
-            Debug.WriteLine("Ex2 E");
             await returnedTask;
-            Debug.WriteLine("Ex2 F");
+            Debug.WriteLine("Ex2 E");
             return 10;
         }
 
-        public async Task<int> FlowOfControlEx2Part4()
+        // EXERCISE 2
+        public async Task<int> FlowOfControlEx2Part3()
         {
-            Debug.WriteLine("Ex2 G");
+            Debug.WriteLine("Ex2 F");
             for (int numSeconds = 1; numSeconds <= 4; numSeconds++)
             {
-                Debug.WriteLine("Ex2 H" + numSeconds);
+                Debug.WriteLine("Ex2 G" + numSeconds);
+                await Task.Delay(1000);
+            }
+            return 1;
+        }
+
+        // EXERCISE 3
+        public async Task<int> FlowOfControlEx3Part1()
+        {
+            Debug.WriteLine("Ex3 A");
+            Task<int> task = FlowOfControlEx3Part2();
+            Debug.WriteLine("Ex3 B");
+            int thing = await task;
+            Debug.WriteLine("Ex3 C");
+            return 6;
+        }
+
+        // EXERCISE 3
+        public async Task<int> FlowOfControlEx3Part2()
+        {
+            FlowOfControlEx3Part3();
+            Debug.WriteLine("Ex3 D");
+            return 12;
+        }
+
+        // EXERCISE 3
+        public async Task<int> FlowOfControlEx3Part3()
+        {
+            Debug.WriteLine("Ex3 E");
+            for (int numSeconds = 1; numSeconds <= 4; numSeconds++)
+            {
+                Debug.WriteLine("Ex3 F" + numSeconds);
                 await Task.Delay(1000);
             }
             return 1;

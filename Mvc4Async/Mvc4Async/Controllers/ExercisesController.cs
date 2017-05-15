@@ -41,6 +41,14 @@ namespace Mvc4Async.Controllers
             var task = asyncExercises.FlowOfControlEx2Part1();
             return View("AsyncExercises", await task);
         }
+
+        public async Task<ActionResult> FlowOfControlExercise3()
+        {
+            ViewBag.ExerciseType = "Asynchronous exercises - Flow of Control exercise 3.";
+            var asyncExercises = new AsyncExercises();
+            var task = asyncExercises.FlowOfControlEx3Part1();
+            return View("AsyncExercises", await task);
+        }
     } // End of ExercisesController
 }
 

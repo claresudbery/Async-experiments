@@ -3,31 +3,38 @@
 }
 <br />
 <div>
-    <h3>Async Exercises</h3>
+    <h3>Async Examples</h3>
     <div>
-        <h4>Some async exercises</h4>
-        @Html.ActionLink("ReportProgress", "ReportProgress", "Exercise") &nbsp;||&nbsp;
-        @Html.ActionLink("Cancel", "Cancel", "Exercise") &nbsp;||&nbsp;
+        @Html.ActionLink("Dont_await_long_running_code", "Dont_await_long_running_code", "Examples") &nbsp;||&nbsp;
+        @Html.ActionLink("Call_Async_Code_In_NonAsync_Context", "Call_Async_Code_In_NonAsync_Context", "Examples") &nbsp;||&nbsp;
+        @Html.ActionLink("Flow_Of_Execution_Example", "Flow_Of_Execution_Example", "Examples") &nbsp;||&nbsp;
+        @Html.ActionLink("ReportProgress", "ReportProgress", "Examples") &nbsp;||&nbsp;
+        @Html.ActionLink("Cancel", "Cancel", "Examples") &nbsp;||&nbsp;
     </div>
 </div>
 <div>
-    <h3>Async Playground</h3>
+    <h3>Async Exercises</h3>
     <div>
-        <h4>Some async experiments</h4>
+        @Html.ActionLink("Flow Of Control - Exercise 1", "FlowOfControlExercise1", "Exercises") &nbsp;||&nbsp;
+        @Html.ActionLink("Flow Of Control - Exercise 2", "FlowOfControlExercise2", "Exercises") &nbsp;||&nbsp;
+        @Html.ActionLink("Flow Of Control - Exercise 3", "FlowOfControlExercise3", "Exercises") &nbsp;||&nbsp;
+    </div>
+</div>
+<div>
+    <h3>Async Playground (crazy experimentation)</h3>
+    <div>
         @Html.ActionLink("NestedAsyncCallsNoWait", "NestedAsyncCallsNoWait", "Playground") &nbsp;||&nbsp;
         @Html.ActionLink("NestedAsyncCallsWithWait", "NestedAsyncCallsWithWait", "Playground") &nbsp;||&nbsp;
         @Html.ActionLink("PlaceATaskInADifferentContext", "PlaceATaskInADifferentContext", "Playground") &nbsp;||&nbsp;
         @Html.ActionLink("PlaceATaskInADifferentContextAndWaitForIt", "PlaceATaskInADifferentContextAndWaitForIt", "Playground") &nbsp;||&nbsp;
     </div>
     <div>
-        <h4>Some more async experiments</h4>
         @Html.ActionLink("FlowOfExecutionExample", "FlowOfExecutionExample", "Playground") &nbsp;||&nbsp;
         @Html.ActionLink("CreateADeadlock", "CreateADeadlock", "Playground") &nbsp;||&nbsp;
         @Html.ActionLink("EachAsyncMethodHasItsOwnContext", "EachAsyncMethodHasItsOwnContext", "Playground") &nbsp;||&nbsp;
         @Html.ActionLink("CallingCodeWhichContainsMultipleAwaits", "CallingCodeWhichContainsMultipleAwaits", "Playground") &nbsp;||&nbsp;
     </div>
     <div>
-        <h4>...and still more</h4>
         @Html.ActionLink("CallAsyncCodeInANonAsyncContext", "CallAsyncCodeInANonAsyncContext", "Playground") &nbsp;||&nbsp;
         @Html.ActionLink("ReportProgress", "ReportProgress", "Playground") &nbsp;||&nbsp;
         @Html.ActionLink("Cancel", "Cancel", "Playground") &nbsp;||&nbsp;
