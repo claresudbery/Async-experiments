@@ -126,7 +126,7 @@ namespace Mvc4Async.Service
 
         public async Task<int> MarkedAsyncWithIntegerTaskReturningRandomValue()
         {
-            System.Diagnostics.Debug.WriteLine("P. I am at the beginnong of a task that will take 11 seconds.");
+            System.Diagnostics.Debug.WriteLine("P. I am at the beginning of a task that will take 11 seconds.");
             for (int numSeconds = 1; numSeconds <= 11; numSeconds++)
             {
                 await Task.Delay(1000);
@@ -263,9 +263,9 @@ namespace Mvc4Async.Service
         // The returned task is not related to the three await statements, 
         // apart from the fact that it will not be returned until all three awaited things have been completed.
         // What's interesting is that each await statement will return control to the caller,
-        // so potentially any code in the caller will get interrupted by each await statement returning?
-        // See CallingCodeWhichContainsMultipleAwaits for an attempt to test this.
-        // I guess it doesn't matter - each await statement returns control once it has completed,
+        // so potentially any code in the caller will get interrupted by each await statement returning.
+        // See CallingCodeWhichContainsMultipleAwaits for code which tests this.
+        // It doesn't actually matter - each await statement returns control once it has completed,
         // so in fact the multiple await statements will effectively be invoked synchronously
         // - one after the other.
         public async Task ReturnATaskEvenThoughWeHaveUsedTheAwaitKeywordMoreThanOnce()

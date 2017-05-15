@@ -16,7 +16,7 @@ namespace Mvc4Async.Controllers
     [OutputCache(Location = OutputCacheLocation.None, NoStore = true)]
     public class PlaygroundController : Controller
     {
-        static CancellationTokenSource _CancellationToken = new CancellationTokenSource();
+        static CancellationTokenSource _cancellationToken = new CancellationTokenSource();
 
         public async Task<ActionResult> NestedAsyncCallsNoWait()
         {
@@ -135,10 +135,10 @@ namespace Mvc4Async.Controllers
             var progressIndicator = new Progress<ProgressIndicator>(ReportProgress);
             try
             {
-                _CancellationToken.Dispose();
-                _CancellationToken = new CancellationTokenSource();
+                _cancellationToken.Dispose();
+                _cancellationToken = new CancellationTokenSource();
                 await asyncExperiments.MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext(
-                    _CancellationToken.Token,
+                    _cancellationToken.Token,
                     progressIndicator);
             }
             catch (Exception e)
@@ -151,7 +151,7 @@ namespace Mvc4Async.Controllers
 
         public async Task<ActionResult> Cancel()
         {
-            _CancellationToken.Cancel();
+            _cancellationToken.Cancel();
 
             return View("AsyncExperiments", 10);
         }
