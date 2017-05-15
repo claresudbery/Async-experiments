@@ -70,6 +70,20 @@ namespace Mvc4Async.Controllers
             return View("AsyncExperiments", await asyncExperiments.FlowOfExecutionExample());
         }
 
+        public async Task<string> ConfigureAwaitExample()
+        {
+            string fileName = "";
+
+            var fileContents = await DownloadFileContentsAsync(fileName).ConfigureAwait(false);
+
+            return fileContents;
+        }
+
+        private async Task<string> DownloadFileContentsAsync(string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<ActionResult> CreateADeadlock()
         {
             ViewBag.ExperimentType = "Asynchronous experiments - deadlock example. Warning! This will hang!!";
@@ -78,7 +92,7 @@ namespace Mvc4Async.Controllers
             var task = asyncExperiments.FlowOfExecutionExample();
             var result = task.Result;
 
-            System.Diagnostics.Debug.WriteLine("Because of the deadlock, this line of code should never be reached!");
+            System.Diagnostics.Debug.WriteLine("Because of the deadlock, this line of code will never be reached!");
 
             return View("AsyncExperiments", result);
         }

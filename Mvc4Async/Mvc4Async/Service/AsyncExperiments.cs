@@ -395,5 +395,25 @@ namespace Mvc4Async.Service
                 }
             }
         }
+
+        public async Task CalculateAnswer1()
+        {
+            await Task.Delay(100);
+        }
+
+        public Task CalculateAnswer2()
+        {
+            return Task.Delay(100);
+        }
+
+        public async Task GetAnswer1()
+        {
+            await CalculateAnswer1();
+        }
+
+        public async Task GetAnswer2()
+        {
+            await CalculateAnswer2();
+        }
     }
 }

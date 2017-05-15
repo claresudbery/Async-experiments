@@ -14,21 +14,21 @@ namespace Mvc4Async.Controllers
 {
     [UseStopwatch]
     [OutputCache(Location = OutputCacheLocation.None, NoStore = true)]
-    public class ExerciseController : Controller
+    public class ExamplesController : Controller
     {
         static CancellationTokenSource _CancellationToken = new CancellationTokenSource();
 
         public async Task<ActionResult> ReportProgress()
         {
-            ViewBag.ExerciseType = "Asynchronous exercises - Reporting Progress.";
-            var asyncExercises = new AsyncExercises();
+            ViewBag.ExerciseType = "Asynchronous examples - Reporting Progress.";
+            var AsyncExamples = new AsyncExamples();
 
             var progressIndicator = new Progress<ProgressIndicator>(ReportProgress);
             try
             {
                 _CancellationToken.Dispose();
                 _CancellationToken = new CancellationTokenSource();
-                await asyncExercises.MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext(
+                await AsyncExamples.MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext(
                     _CancellationToken.Token,
                     progressIndicator);
             }
@@ -37,7 +37,7 @@ namespace Mvc4Async.Controllers
                 ProgressHub.CancelProcessing(e.Message);
             }
 
-            return View("AsyncExercises", 10);
+            return View("AsyncExamples", 10);
         }
 
         public async Task<ActionResult> Cancel()
@@ -45,7 +45,7 @@ namespace Mvc4Async.Controllers
             ViewBag.ExerciseType = "Async operation was cancelled.";
             _CancellationToken.Cancel();
 
-            return View("AsyncExercises", 10);
+            return View("AsyncExamples", 10);
         }
 
         private void ReportProgress(ProgressIndicator progressIndicator)

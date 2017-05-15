@@ -7,7 +7,7 @@ using Mvc4Async.Hubs;
 
 namespace Mvc4Async.Service
 {
-    public class AsyncExercises
+    public class AsyncExamples
     {
         public async Task<int> MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext(
             CancellationToken cancellationToken,
