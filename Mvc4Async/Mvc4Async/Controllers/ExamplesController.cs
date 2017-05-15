@@ -88,6 +88,6 @@ namespace Mvc4Async.Controllers
         {
             ProgressHub.NotifyHowManyProcessed(progressIndicator.Count, progressIndicator.Total);
         }
-    } // End of PlaygroundController
+    } // End of ExamplesController
 }
 
