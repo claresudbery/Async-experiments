@@ -1,48 +1,61 @@
 ﻿@{    
-    Layout =null;
-    }
-
-       <br />
-<h3>All Products Widgets Gizmos</h3>
-      @Html.ActionLink("Async PWG ", "PWGasync") &nbsp;||&nbsp;
-     @Html.ActionLink("Sync PWG", "PWG") &nbsp;||&nbsp;
-
-        </div>
-    <div>
-        <h3> Asynchronous Versions</h3>
-              @Html.ActionLink("Widgets Async (3 seconds)", "WidgetsAsync") &nbsp;||&nbsp;
-       @Html.ActionLink("Gizmos Async (10 seconds)", "GizmosAsync") &nbsp;||&nbsp;
-        @Html.ActionLink("Products Async (10 milliseconds)", "ProductsAsync") 
-    </div>
-        <div>
-        <h3> Synchronous Versions</h3>
-       @Html.ActionLink("Sync Widgets", "Widgets") &nbsp;||&nbsp;
-       @Html.ActionLink("Sync Gizmos", "Gizmos") &nbsp;||&nbsp;
-        @Html.ActionLink("Sync Products", "Products") 
-    </div>
+    Layout = null;
+}
+<br />
 <div>
-    <h3> Async Playground</h3>
+    <h3>Async Exercises</h3>
     <div>
-        @Html.ActionLink("NestedAsyncCallsNoWait", "NestedAsyncCallsNoWait") &nbsp;||&nbsp;
-        @Html.ActionLink("NestedAsyncCallsWithWait", "NestedAsyncCallsWithWait") &nbsp;||&nbsp;
-        @Html.ActionLink("PlaceATaskInADifferentContext", "PlaceATaskInADifferentContext") &nbsp;||&nbsp;
-        @Html.ActionLink("PlaceATaskInADifferentContextAndWaitForIt", "PlaceATaskInADifferentContextAndWaitForIt") &nbsp;||&nbsp;
-    </div>
-    <div>
-        @Html.ActionLink("FlowOfExecutionExample", "FlowOfExecutionExample") &nbsp;||&nbsp;
-        @Html.ActionLink("CreateADeadlock", "CreateADeadlock") &nbsp;||&nbsp;
-        @Html.ActionLink("EachAsyncMethodHasItsOwnContext", "EachAsyncMethodHasItsOwnContext") &nbsp;||&nbsp;
-        @Html.ActionLink("CallingCodeWhichContainsMultipleAwaits", "CallingCodeWhichContainsMultipleAwaits") &nbsp;||&nbsp;
-    </div>
-    <div>
-        @Html.ActionLink("CallAsyncCodeInANonAsyncContext", "CallAsyncCodeInANonAsyncContext") &nbsp;||&nbsp;
-        @Html.ActionLink("ReportProgress", "ReportProgress") &nbsp;||&nbsp;
-        @Html.ActionLink("Cancel", "Cancel") &nbsp;||&nbsp;
+        <h4>Some async exercises</h4>
+        @Html.ActionLink("ReportProgress", "ReportProgress", "Exercise") &nbsp;||&nbsp;
+        @Html.ActionLink("Cancel", "Cancel", "Exercise") &nbsp;||&nbsp;
     </div>
 </div>
 <div>
-    <h3>Cancellation Tokens and Timeouts</h3>
-     @Html.ActionLink("Gizmos Cancellation Token", "GizmosCancelAsync")  &nbsp;||&nbsp;
-     @Html.ActionLink("PWGtimeOut Cancellation", "PWGtimeOut") 
+    <h3>Async Playground</h3>
+    <div>
+        <h4>Some async experiments</h4>
+        @Html.ActionLink("NestedAsyncCallsNoWait", "NestedAsyncCallsNoWait", "Playground") &nbsp;||&nbsp;
+        @Html.ActionLink("NestedAsyncCallsWithWait", "NestedAsyncCallsWithWait", "Playground") &nbsp;||&nbsp;
+        @Html.ActionLink("PlaceATaskInADifferentContext", "PlaceATaskInADifferentContext", "Playground") &nbsp;||&nbsp;
+        @Html.ActionLink("PlaceATaskInADifferentContextAndWaitForIt", "PlaceATaskInADifferentContextAndWaitForIt", "Playground") &nbsp;||&nbsp;
+    </div>
+    <div>
+        <h4>Some more async experiments</h4>
+        @Html.ActionLink("FlowOfExecutionExample", "FlowOfExecutionExample", "Playground") &nbsp;||&nbsp;
+        @Html.ActionLink("CreateADeadlock", "CreateADeadlock", "Playground") &nbsp;||&nbsp;
+        @Html.ActionLink("EachAsyncMethodHasItsOwnContext", "EachAsyncMethodHasItsOwnContext", "Playground") &nbsp;||&nbsp;
+        @Html.ActionLink("CallingCodeWhichContainsMultipleAwaits", "CallingCodeWhichContainsMultipleAwaits", "Playground") &nbsp;||&nbsp;
+    </div>
+    <div>
+        <h4>...and still more</h4>
+        @Html.ActionLink("CallAsyncCodeInANonAsyncContext", "CallAsyncCodeInANonAsyncContext", "Playground") &nbsp;||&nbsp;
+        @Html.ActionLink("ReportProgress", "ReportProgress", "Playground") &nbsp;||&nbsp;
+        @Html.ActionLink("Cancel", "Cancel", "Playground") &nbsp;||&nbsp;
+    </div>
 </div>
-   
+<div>
+    <h3>Async Samples Using an API</h3>
+    <div>
+        <h4>All Products Widgets Gizmos</h4>
+        @Html.ActionLink("Async PWG ", "PWGasync", "Home") &nbsp;||&nbsp;
+        @Html.ActionLink("Sync PWG", "PWG", "Home") &nbsp;||&nbsp;
+    </div>
+    <div>
+        <h4> Asynchronous Versions</h4>
+        @Html.ActionLink("Widgets Async (3 seconds)", "WidgetsAsync", "Home") &nbsp;||&nbsp;
+        @Html.ActionLink("Gizmos Async (10 seconds)", "GizmosAsync", "Home") &nbsp;||&nbsp;
+        @Html.ActionLink("Products Async (10 milliseconds)", "ProductsAsync", "Home")
+    </div>
+    <div>
+        <h4> Synchronous Versions</h4>
+        @Html.ActionLink("Sync Widgets", "Widgets", "Home") &nbsp;||&nbsp;
+        @Html.ActionLink("Sync Gizmos", "Gizmos", "Home") &nbsp;||&nbsp;
+        @Html.ActionLink("Sync Products", "Products", "Home")
+    </div>
+    <div>
+        <h4>Cancellation Tokens and Timeouts</h4>
+        @Html.ActionLink("Gizmos Cancellation Token", "GizmosCancelAsync", "Home")  &nbsp;||&nbsp;
+        @Html.ActionLink("PWGtimeOut Cancellation", "PWGtimeOut", "Home")
+    </div>
+</div>
+

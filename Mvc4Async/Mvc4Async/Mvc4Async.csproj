@@ -147,11 +147,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Controllers\ExerciseController.cs" />
+    <Compile Include="Controllers\PlaygroundController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\UseStopwatchAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Service\AsyncExercises.cs" />
     <Compile Include="Service\AsyncExperiments.cs" />
     <Compile Include="Models\Gizmo.cs" />
     <Compile Include="Models\ProdGizWidgetVM.cs" />
@@ -244,7 +247,8 @@
     <Content Include="Views\Home\PWG.cshtml" />
     <Content Include="Views\Home\Widgets.cshtml" />
     <Content Include="Views\Shared\_links.cshtml" />
-    <Content Include="Views\Home\AsyncExperiments.cshtml" />
+    <Content Include="Views\Playground\AsyncExperiments.cshtml" />
+    <Content Include="Views\Exercise\AsyncExercises.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
