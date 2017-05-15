@@ -60,11 +60,22 @@ namespace Mvc4Async.Controllers
             var asyncExamples = new AsyncExamples();
 
             var progressIndicator = new Progress<ProgressIndicator>(ReportProgress);
+            await asyncExamples.AsyncMethodWithProgress(progressIndicator);
+
+            return View("AsyncExamples", 10);
+        }
+
+        public async Task<ActionResult> ThisActionCanBeCancelled()
+        {
+            ViewBag.ExampleType = "Asynchronous examples - This Action Can Be Cancelled.";
+            var asyncExamples = new AsyncExamples();
+
+            var progressIndicator = new Progress<ProgressIndicator>(ReportProgress);
             try
             {
                 _cancellationToken.Dispose();
                 _cancellationToken = new CancellationTokenSource();
-                await asyncExamples.MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext(
+                await asyncExamples.AsyncMethodWithCancellation(
                     _cancellationToken.Token,
                     progressIndicator);
             }

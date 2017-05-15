@@ -15,7 +15,8 @@ namespace Mvc4Async.Service
             return 1;
         }
 
-        // EXERCISE 1
+        // EXERCISE 1:
+        // What will the debug output be? What order will the letters appear?
         public async Task<int> FlowOfControlEx1Part1()
         {
             Debug.WriteLine("Ex1 A");
@@ -36,6 +37,7 @@ namespace Mvc4Async.Service
         }
 
         // EXERCISE 2
+        // What will the debug output be? What order will the letters appear?
         public async Task<int> FlowOfControlEx2Part1()
         {
             Debug.WriteLine("Ex2 A");
@@ -69,6 +71,7 @@ namespace Mvc4Async.Service
         }
 
         // EXERCISE 3
+        // What will the debug output be? What order will the letters appear?
         public async Task<int> FlowOfControlEx3Part1()
         {
             Debug.WriteLine("Ex3 A");

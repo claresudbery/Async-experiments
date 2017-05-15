@@ -97,30 +97,40 @@ namespace Mvc4Async.Service
             return 12;
         }
 
-        public async Task<int> MarkedAsyncWithIntegerTaskReturningRandomValueToDifferentContext(
+        public async Task<int> AsyncMethodWithProgress(IProgress<ProgressIndicator> progress = null)
+        {
+            int totalSeconds = 11;
+            System.Diagnostics.Debug.WriteLine($"I am at the beginning of a task that will take {totalSeconds} seconds.");
+            for (int numSeconds = 1; numSeconds <= totalSeconds; numSeconds++)
+            {
+                await Task.Delay(1000);
+                if (progress != null)
+                {
+                    progress.Report(new ProgressIndicator { Count = numSeconds, Total = totalSeconds });
+                }
+                System.Diagnostics.Debug.WriteLine($"This task should take {totalSeconds} seconds. Number of seconds so far: {numSeconds}");
+            }
+            
+            return 1;
+        }
+
+        public async Task<int> AsyncMethodWithCancellation(
             CancellationToken cancellationToken,
             IProgress<ProgressIndicator> progress = null)
         {
             int totalSeconds = 11;
-            System.Diagnostics.Debug.WriteLine($"P. I am at the beginning of a task that will take {totalSeconds} seconds.");
+            System.Diagnostics.Debug.WriteLine($"I am at the beginning of a task that will take {totalSeconds} seconds.");
             for (int numSeconds = 1; numSeconds <= totalSeconds; numSeconds++)
             {
-                // The use of ConfigureAwait means that after the delay, we will return to a different context
-                // (not the request context).
-                await Task.Delay(1000).ConfigureAwait(false);
+                await Task.Delay(1000);
                 if (progress != null)
                 {
                     progress.Report(new ProgressIndicator { Count = numSeconds, Total = totalSeconds });
                 }
                 cancellationToken.ThrowIfCancellationRequested();
-                System.Diagnostics.Debug.WriteLine($"Q. This task should take {totalSeconds} seconds. Number of seconds so far: {numSeconds}");
+                System.Diagnostics.Debug.WriteLine($"This task should take {totalSeconds} seconds. Number of seconds so far: {numSeconds}");
             }
-
-            // Note that the return value of 1 will automatically get wrapped in a task,
-            // and that task will have nothing to do with the task we are awaiting above??
-            // Yes, I guess so - the await keyword above returns control to this point once
-            // it has completed, and the new code is executed. The calling code will get the
-            // returned int when it uses the await keyword - but not until the above task has returned control.
+            
             return 1;
         }
     }
