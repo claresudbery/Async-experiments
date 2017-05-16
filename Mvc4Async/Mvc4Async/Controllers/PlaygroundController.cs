@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using Mvc4Async.Models;
 using System.Threading.Tasks;
 using Mvc4Async.Filters;
 using System.Web.UI;
 using System.Threading;
+using System.Web;
+using System.Web.Routing;
 using Mvc4Async.Hubs;
 using Mvc4Async.Service;
 
@@ -102,7 +105,19 @@ namespace Mvc4Async.Controllers
             ViewBag.ExperimentType = "Asynchronous experiments - Each Async Method Has Its Own Context.";
             var asyncExperiments = new AsyncExperiments();
 
-            return View("AsyncExperiments", await asyncExperiments.EachAsyncMethodHasItsOwnContext());
+            // At this point the current http context and sychronization contexts are both populated.
+            ContextHelper.OutputRequestAndSynchronizationContexts("Before ConfigureAwait(false): ");
+
+            var result = await asyncExperiments.EachAsyncMethodHasItsOwnContext().ConfigureAwait(false);
+
+            // At this point the current http context and sychronization contexts are no longer populated.
+            ContextHelper.OutputRequestAndSynchronizationContexts("After ConfigureAwait(false): ");
+
+            // Note that even though we are no longer in the request context, the base controller class has kept 
+            // track of the response in its Response property, so we can still access the response in this class.
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+
+            return View("AsyncExperiments", result);
         }
 
         public async Task<ActionResult> CallingCodeWhichContainsMultipleAwaits()
@@ -162,4 +177,3 @@ namespace Mvc4Async.Controllers
         }
     } // End of PlaygroundController
 }
-

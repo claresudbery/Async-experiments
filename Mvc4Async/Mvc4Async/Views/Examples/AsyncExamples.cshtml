@@ -1,16 +1,5 @@
 ﻿@model int
 
-@{
-    ViewBag.Title = "Async Examples";
-}
-
-<h2>@ViewBag.Title  @ViewBag.ExampleType</h2>
-
-
-<table>
-    <tr>
-        <th>
-            @Html.DisplayFor(model => model)
-        </th>
-    </tr>
-</table>
+<h2>@ViewBag.ExampleType</h2>
+<h2>Result: @Html.DisplayFor(model => model)</h2>
+<h2>Response status: @Response.StatusCode (@Enum.GetName(typeof(HttpStatusCode), Response.StatusCode))</h2>

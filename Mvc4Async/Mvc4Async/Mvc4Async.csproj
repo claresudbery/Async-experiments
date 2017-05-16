@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Service\ContextHelper.cs" />
     <Compile Include="Controllers\ExercisesController.cs" />
     <Compile Include="Controllers\ExamplesController.cs" />
     <Compile Include="Controllers\PlaygroundController.cs" />
@@ -252,6 +253,7 @@
     <Content Include="Views\Playground\AsyncExperiments.cshtml" />
     <Content Include="Views\Examples\AsyncExamples.cshtml" />
     <Content Include="Views\Exercises\AsyncExercises.cshtml" />
+    <Content Include="Views\Playground\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Routing;
 using Mvc4Async.Hubs;
 
 namespace Mvc4Async.Service
@@ -331,11 +334,18 @@ namespace Mvc4Async.Service
 
         public async Task<int> EachAsyncMethodHasItsOwnContext()
         {
-            await AsyncCodeResumingInADifferentContext();
+            // At this point the current http context and sychronization contexts are both populated.
+            ContextHelper.OutputRequestAndSynchronizationContexts("Before ConfigureAwait(false): ");
+
+            await AsyncCodeResumingInADifferentContext();//.ConfigureAwait(false);
+
+            // At this point the current http context and sychronization contexts are no longer populated.
+            // This means we cannot access the response any more to change the response status code.
+            ContextHelper.OutputRequestAndSynchronizationContexts("After ConfigureAwait(false): ");
 
             // Do some more processing
-            Debug.WriteLine("This code is back in the main default context again, even though the nexted code changed context.");
-
+            Debug.WriteLine("This code is back in the main default context again, even though the nested code changed context.");
+            
             return 12;
         }
 
@@ -344,7 +354,17 @@ namespace Mvc4Async.Service
             await Task.Delay(1000).ConfigureAwait(false);
 
             // Do some more processing
-            Debug.WriteLine("This code will execute in a context that is not the main request context.");
+            Debug.WriteLine("All code after this point will execute in a context that is not the main request context.");
+            Debug.WriteLine("This means it can continue to execute, even if the main request has terminated.");
+
+            await Task.Delay(1000).ConfigureAwait(false);
+            Debug.WriteLine("First delay out of three.");
+
+            await Task.Delay(1000).ConfigureAwait(false);
+            Debug.WriteLine("Second delay out of three.");
+
+            await Task.Delay(1000).ConfigureAwait(false);
+            Debug.WriteLine("Third delay out of three.");
 
             return 12;
         }
