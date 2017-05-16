@@ -1,16 +1,3 @@
-﻿@model int
+﻿<h2>@ViewBag.ExerciseType</h2>
 
-@{
-    ViewBag.Title = "Async Exercises";
-}
-
-<h2>@ViewBag.Title  @ViewBag.ExerciseType</h2>
-
-
-<table>
-    <tr>
-        <th>
-            @Html.DisplayFor(model => model)
-        </th>
-    </tr>
-</table>
+<h2>Response status: @Response.StatusCode (@Enum.GetName(typeof(HttpStatusCode), Response.StatusCode))</h2>

@@ -20,5 +20,14 @@ namespace Mvc4Async.Service
             Debug.WriteLine(
                 $"Current request context: {currentHttpContext}. Current synchronization context: {currentSynchronizationContext}");
         }
+
+        public static void OutputRequestContext()
+        {
+            string currentHttpContext = System.Web.HttpContext.Current != null
+                ? "available"
+                : "null";
+
+            Debug.WriteLine(currentHttpContext);
+        }
     }
 }

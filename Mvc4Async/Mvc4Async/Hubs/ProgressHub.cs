@@ -14,6 +14,15 @@ namespace Mvc4Async.Hubs
             hubContext.Clients.All.sendMessage(string.Format(message), percentage);
         }
 
+        public static void NotifyWhatHasBeenProcessed(int count, int total, string what)
+        {
+            decimal percentage = ((decimal)count / (decimal)total) * 100;
+            var message = "Processed some " + what;
+
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<ProgressHub>();
+            hubContext.Clients.All.sendMessage(string.Format(message), percentage);
+        }
+
         public static void CancelProcessing(string message)
         {
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<ProgressHub>();
