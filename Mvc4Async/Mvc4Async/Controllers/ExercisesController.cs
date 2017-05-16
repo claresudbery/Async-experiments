@@ -127,7 +127,7 @@ namespace Mvc4Async.Controllers
         //      (Hint 2: look at ExamplesController.Cancel)
         public async Task<ActionResult> Cancel_Exercise()
         {
-            ViewBag.ExerciseType = "Asynchronous exercises - Cancel Exercise.";
+            ViewBag.ExerciseType = "Asynchronous exercises - Cancellation Exercise.";
             var asyncExercises = new AsyncExercises();
 
             return View("AsyncExercises");
