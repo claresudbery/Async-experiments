@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
@@ -220,6 +221,63 @@ namespace Mvc4Async.Service
                 await Task.Delay(1000);
                 System.Diagnostics.Debug.WriteLine("Number of seconds so far: " + numSeconds);
             }
+        }
+
+        public async Task Parallel_Asynchronous()
+        {
+            Debug.WriteLine($"About to start parallel asynchronous code. Thread id: {Thread.CurrentThread.ManagedThreadId}");
+
+            // By giving the tasks staggered starts, we increase the chances of them being run on the same thread.
+            Task[] parallelAsynchronousTasks = new Task[] {
+                Start_After_n_Milliseconds(100),
+                Start_After_n_Milliseconds(200),
+                Start_After_n_Milliseconds(300),
+                Start_After_n_Milliseconds(400),
+                Start_After_n_Milliseconds(500),
+                Start_After_n_Milliseconds(600),
+                Start_After_n_Milliseconds(700),
+                Start_After_n_Milliseconds(800)};
+
+            // Because we use the await statement, we free up the main request context.
+            await Task.WhenAll(parallelAsynchronousTasks);
+        }
+
+        public async Task Start_After_n_Milliseconds(int firstDelay)
+        {
+            await Task.Delay(firstDelay);
+            Debug.WriteLine($"First delay (starting with {firstDelay} milliseconds). Thread id: {Thread.CurrentThread.ManagedThreadId}");
+            await Task.Delay(1000);
+            Debug.WriteLine($"Second delay (starting with {firstDelay} milliseconds). Thread id: {Thread.CurrentThread.ManagedThreadId}");
+            await Task.Delay(1000);
+            Debug.WriteLine($"Third delay (starting with {firstDelay} milliseconds). Thread id: {Thread.CurrentThread.ManagedThreadId}");
+        }
+
+        public void Parallel_Synchronous()
+        { 
+            var tasks = new List<Task>();
+
+            Debug.WriteLine($"About to start parallel synchronous code. Thread id: {Thread.CurrentThread.ManagedThreadId}");
+            tasks.Add(Task.Factory.StartNew(() => Sleep_After_n_Milliseconds(100)));
+            tasks.Add(Task.Factory.StartNew(() => Sleep_After_n_Milliseconds(200)));
+            tasks.Add(Task.Factory.StartNew(() => Sleep_After_n_Milliseconds(300)));
+            tasks.Add(Task.Factory.StartNew(() => Sleep_After_n_Milliseconds(400)));
+            tasks.Add(Task.Factory.StartNew(() => Sleep_After_n_Milliseconds(500)));
+            tasks.Add(Task.Factory.StartNew(() => Sleep_After_n_Milliseconds(600)));
+            tasks.Add(Task.Factory.StartNew(() => Sleep_After_n_Milliseconds(700)));
+            tasks.Add(Task.Factory.StartNew(() => Sleep_After_n_Milliseconds(800)));
+
+            // Because we use Task.WaitAll, the main thread is blocked while it waits for the parallel tasks to complete.
+            Task.WaitAll(tasks.ToArray());
+        }
+
+        public void Sleep_After_n_Milliseconds(int firstSleep)
+        {
+            Thread.Sleep(firstSleep);
+            Debug.WriteLine($"First sleep (starting with {firstSleep} milliseconds). Thread id: {Thread.CurrentThread.ManagedThreadId}");
+            Thread.Sleep(1000);
+            Debug.WriteLine($"Second sleep (starting with {firstSleep} milliseconds). Thread id: {Thread.CurrentThread.ManagedThreadId}");
+            Thread.Sleep(1000);
+            Debug.WriteLine($"Third sleep (starting with {firstSleep} milliseconds). Thread id: {Thread.CurrentThread.ManagedThreadId}");
         }
     }
 }

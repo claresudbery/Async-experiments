@@ -182,6 +182,22 @@ namespace Mvc4Async.Controllers
             return View("AsyncExamples", 10);
         }
 
+        public async Task<ActionResult> Parallel_Asynchronous()
+        {
+            ViewBag.ExampleType = "Asynchronous examples - parallel asynchronous code.";
+            var asyncExamples = new AsyncExamples();
+            await asyncExamples.Parallel_Asynchronous();
+            return View("AsyncExamples", 13);
+        }
+
+        public ActionResult Parallel_Synchronous()
+        {
+            ViewBag.ExampleType = "Asynchronous examples - parallel synchronous code.";
+            var asyncExamples = new AsyncExamples();
+            asyncExamples.Parallel_Synchronous();
+            return View("AsyncExamples", 14);
+        }
+
         private void ReportProgress(ProgressIndicator progressIndicator)
         {
             ProgressHub.NotifyHowManyProcessed(progressIndicator.Count, progressIndicator.Total);
